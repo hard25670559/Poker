@@ -46,8 +46,7 @@ public class Rule {
 	public boolean isStraight() {
 		
 		
-		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -56,18 +55,44 @@ public class Rule {
 	 * @return 回傳是或否
 	 */
 	public boolean isFourOfAKind() {
-		
-		
-		
-		return true;
+		Card tmp = null;
+		int sameCount = 0;
+		int unsameCount = 0;
+		boolean isFourOfAKind = false;
+		for (int index=0 ; index<this.cards.length ; index++) {
+			
+			System.out.println(index);
+			
+			if (index == 0) {	//先將第一張丟入暫存
+				tmp = this.cards[index];
+			} else {
+				if (tmp.getNumber() == this.cards[index].getNumber()) {	//判斷相鄰的牌是否相同
+					sameCount++;
+					if (sameCount == 3){	//有三次相同就不須再繼續跑下去
+						isFourOfAKind = true;
+						break;
+					}
+				} else {
+					unsameCount++;
+					if (unsameCount == 2) {	//有兩次不相同就不須再跑下去
+						isFourOfAKind = false;
+						break;
+					}
+				}
+				tmp = this.cards[index];	//更換暫存的牌，才有辦法判斷相鄰的牌
+			}
+		}
+		return isFourOfAKind;
 	}
 	
 	public static void main(String[] args) {
-//		Rule r = new Rule(Card.CLUB_EIGHT, Card.HEART_EIGHT, Card.DIAMOND_EIGHT, Card.SPADE_EIGHT, Card.DIAMOND_SIX);
+//		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_SIX, Card.CLUB_ONE, Card.HEART_SIX, Card.SPADE_SIX);
+		Rule r = new Rule(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_EIGHT, Card.CLUB_FIVE, Card.CLUB_THIRTEEN);
+//		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_SIX, Card.SPADE_EIGHT);
 //		Rule r = new Rule(Card.CLUB_EIGHT, Card.DIAMOND_FOUR, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
-		Rule r = new Rule(Card.DIAMOND_TWELVE, Card.DIAMOND_FOUR, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
+//		Rule r = new Rule(Card.DIAMOND_TWELVE, Card.DIAMOND_ONE, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
 		
-		System.out.println(r.isFlush());
+		System.out.println(r.isFourOfAKind());
 		
 	}
 	
