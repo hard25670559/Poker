@@ -2,10 +2,10 @@ package ShowHand;
 
 import Poker.Card;
 
-public class Rule {
+public class TypeRule {
 	private Card[] cards = new Card[5];
 	
-	public Rule(Card... cards) {
+	public TypeRule(Card... cards) {
 		this.cards = cards;
 	}
 	
@@ -87,7 +87,7 @@ public class Rule {
 	
 	public static void main(String[] args) {
 //		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_SIX, Card.CLUB_ONE, Card.HEART_SIX, Card.SPADE_SIX);
-		Rule r = new Rule(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_EIGHT, Card.CLUB_FIVE, Card.CLUB_THIRTEEN);
+		TypeRule r = new TypeRule(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_EIGHT, Card.CLUB_FIVE, Card.CLUB_THIRTEEN);
 //		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_SIX, Card.SPADE_EIGHT);
 //		Rule r = new Rule(Card.CLUB_EIGHT, Card.DIAMOND_FOUR, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
 //		Rule r = new Rule(Card.DIAMOND_TWELVE, Card.DIAMOND_ONE, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
