@@ -1,5 +1,7 @@
 package ShowHand;
 
+import java.util.Arrays;
+
 import Poker.Card;
 
 public class TypeRule {
@@ -44,7 +46,15 @@ public class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public boolean isStraight() {
+		Card[] tmp = new Card[this.cards.length];
+		int[] num_tmp = new int[this.cards.length];
 		
+		for (int index=0 ; index<this.cards.length ; index++) {
+			num_tmp[index] = this.cards[index].getNumber().getCode();
+		}
+		
+		Arrays.sort(num_tmp);
+			
 		
 		return false;
 	}
@@ -83,6 +93,18 @@ public class TypeRule {
 			}
 		}
 		return isFourOfAKind;
+	}
+	
+	public Card[] suitSort(Card... cards) {
+		for () {
+			
+		}
+		
+		return null;
+	}
+	
+	public Card[] numberSort(Card... cards) {
+		return null;
 	}
 	
 	public static void main(String[] args) {
