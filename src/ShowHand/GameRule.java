@@ -6,8 +6,8 @@ import RuleFramework.TypeCompare;
 public class GameRule implements TypeCompare{
 
 	@Override
-	public boolean test(CardType type1, CardType type2) {
-		// TODO Auto-generated method stub
+	public boolean compare(CardType type1, CardType type2) {
+		
 		return false;
 	}
 	
