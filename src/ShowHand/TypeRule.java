@@ -111,6 +111,9 @@ public class TypeRule {
 //		Rule r = new Rule(Card.CLUB_EIGHT, Card.DIAMOND_FOUR, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
 //		Rule r = new Rule(Card.DIAMOND_TWELVE, Card.DIAMOND_ONE, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
 		
+		for (Card card : r.numberSort(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_THREE, Card.CLUB_FIVE, Card.CLUB_FOUR))
+			System.out.println(card);
+		
 		System.out.println(r.isFourOfAKind());
 		
 	}
