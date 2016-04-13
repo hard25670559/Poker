@@ -1,7 +1,7 @@
 package ShowHand;
 
-import Framwork.CardType;
-import Framwork.TypeCompare;
+import RuleFramework.CardType;
+import RuleFramework.TypeCompare;
 
 public class GameRule implements TypeCompare{
 

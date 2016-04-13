@@ -1,4 +1,4 @@
-package Framwork;
+package RuleFramework;
 /**
  * 兩組牌的比較介面
  * @author Anonymous

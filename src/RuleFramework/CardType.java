@@ -1,4 +1,4 @@
-package Framwork;
+package RuleFramework;
 
 /**
  * 定義牌型基本設定介面
