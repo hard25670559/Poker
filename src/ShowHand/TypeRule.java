@@ -98,6 +98,7 @@ public class TypeRule {
 	public Card[] suitSort(Card... cards) {
 		for () {
 			
+			
 		}
 		
 		return null;
