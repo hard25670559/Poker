@@ -101,7 +101,23 @@ public class TypeRule {
 	}
 	
 	public Card[] numberSort(Card... cards) {
-		return null;
+		Card[] tmp = new Card[cards.length];
+		Card[] test = null;
+		for (int c=0 ; c<cards.length ; c++) {
+			int max = 0;
+			Card card = null;
+			test = new Card[cards.length-(c+1)];
+			for (int index=0 ; index<cards.length-c ; index++) {
+				if (max < cards[index].getNumber().getCode()) {
+					max = cards[index].getNumber().getCode();
+					card = cards[index];
+				}
+			}
+			tmp[(cards.length-c)-1] = card;
+			System.out.println(max);
+		}
+		
+		return tmp;
 	}
 	
 	public static void main(String[] args) {
@@ -114,7 +130,7 @@ public class TypeRule {
 		for (Card card : r.numberSort(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_THREE, Card.CLUB_FIVE, Card.CLUB_FOUR))
 			System.out.println(card);
 		
-		System.out.println(r.isFourOfAKind());
+//		System.out.println(r.isFourOfAKind());
 		
 	}
 	
