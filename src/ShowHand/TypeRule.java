@@ -101,31 +101,36 @@ public class TypeRule {
 	}
 	
 	public Card[] numberSort(Card... cards) {
-		Card[] tmp = new Card[cards.length];
-		Card[] test = null;
+		Card[] tmp = new Card[cards.length];	//重新把牌排列的暫存
+		Card[] residueCard = null;		//取出最大號碼牌，必須將剩餘的排放入這暫存
 		for (int c=0 ; c<cards.length ; c++) {
-			int max = 0;
-			Card card = null;
-			test = new Card[cards.length-(c+1)];
+			int max = 0;	//最大號碼暫存，預設0
+			Card max_card = null;	//放最大號碼牌的暫存
+			residueCard = new Card[cards.length-(c+1)];	//殘留的牌暫存實作
 			for (int index=0 ; index<cards.length-c ; index++) {
-				if (max < cards[index].getNumber().getCode()) {
-					max = cards[index].getNumber().getCode();
-					card = cards[index];
+				if (max < cards[index].getNumber().getCode()) {	//牌號碼比max大就把max替換成牌號碼
+					max = cards[index].getNumber().getCode();	//取得最大牌號碼
+					max_card = cards[index];	//將最大的牌存到暫存的最後一個位址去
 				}
 			}
-			tmp[(cards.length-c)-1] = card;
-			System.out.println(max);
+			
+			//將剩下的牌，放去暫存，以便下次比對
+			for (int index=0 ; index<cards.length-c-1 ; index++) {
+				System.out.println("index." + index);
+				
+//				if (cards[index] != max_card)	//如果要是和最大的牌一樣的話就跳過
+//					residueCard[index] = cards[index];
+			}
+			
+			tmp[(cards.length-c)-1] = max_card;
+			System.out.println("max." + max);
 		}
 		
 		return tmp;
 	}
 	
 	public static void main(String[] args) {
-//		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_SIX, Card.CLUB_ONE, Card.HEART_SIX, Card.SPADE_SIX);
 		TypeRule r = new TypeRule(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_EIGHT, Card.CLUB_FIVE, Card.CLUB_THIRTEEN);
-//		Rule r = new Rule(Card.DIAMOND_SIX, Card.CLUB_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_SIX, Card.SPADE_EIGHT);
-//		Rule r = new Rule(Card.CLUB_EIGHT, Card.DIAMOND_FOUR, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
-//		Rule r = new Rule(Card.DIAMOND_TWELVE, Card.DIAMOND_ONE, Card.DIAMOND_EIGHT, Card.DIAMOND_SIX, Card.DIAMOND_TEN);
 		
 		for (Card card : r.numberSort(Card.CLUB_ONE, Card.CLUB_TWO, Card.CLUB_THREE, Card.CLUB_FIVE, Card.CLUB_FOUR))
 			System.out.println(card);
