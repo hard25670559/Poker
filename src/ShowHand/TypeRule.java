@@ -1,5 +1,7 @@
 package ShowHand;
 
+import java.util.LinkedList;
+
 import Poker.Card;
 import Poker.Number;
 import Poker.Poker;
@@ -41,12 +43,12 @@ public final class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public static boolean isStraight(Card... cards) {
-		cards = Poker.numberSort(cards);
+		cards = Poker.numberSort(cards);	//先將牌組照點數排序
 		
 		if (cards[0].getNumber() == Number.ONE && cards[1].getNumber() == Number.TEN) {	//判斷是否為A 10 11 12 13
 			return (cards[2].getNumber() == Number.ELEVEN) && (cards[3].getNumber() == Number.TWELVE) && (cards[4].getNumber() == Number.THIRTEEN);
 		} else {
-			int oneDifference  = 0;	//相鄰是否相差1的組數
+			int oneDifference  = 0;	//相鄰是否相差一的組數
 			for (int i=0 ; i<cards.length ; i++) {
 				if (i!=4) {
 					if (cards[i+1].getNumber().getCode() - cards[i].getNumber().getCode() == 1)
@@ -55,6 +57,73 @@ public final class TypeRule {
 			}
 			return oneDifference == 4;	//如果相鄰差一為四組，及代表為順子
 		}
+		
+	}
+	/**
+	 * 判斷是否為兩對
+	 * 
+	 * @return 回傳是或否
+	 */
+	public static boolean isTwoPairs(Card... cards) {
+		cards = Poker.numberSort(cards);	//先將牌組照點數排序
+		
+		int sameCount  = 0;	//相鄰是否相差零的組數
+		
+		for (int i=0 ; i<cards.length ; i++) {
+			if (i!=4) {
+				if (cards[i+1].getNumber().getCode() - cards[i].getNumber().getCode() == 0) {
+					sameCount++;
+				} else {
+					sameCount--;
+				}
+			}
+		}
+		return sameCount == 0;	//如果相鄰差零為兩組，及代表為兩對
+		
+	}
+	
+	/**
+	 * 判斷是否為一對
+	 * 
+	 * @return 回傳是或否
+	 */
+	public static boolean isOnePairs(Card... cards) {
+		cards = Poker.numberSort(cards);	//先將牌組照點數排序
+		
+		int sameCount  = 0;	//相鄰是否相差零的組數
+		for (int i=0 ; i<cards.length ; i++) {
+			if (i!=4) {
+				if (cards[i+1].getNumber().getCode() - cards[i].getNumber().getCode() == 0)
+					sameCount++;
+			}
+		}
+		return sameCount == 1;	//如果相鄰差零為兩組，及代表為兩對
+		
+	}
+	
+	
+	/**
+	 * 判斷是否為三條
+	 * 
+	 * @return 回傳是或否
+	 */
+	public static boolean isThreeOfAkind(Card... cards) {
+		cards = Poker.numberSort(cards);
+		LinkedList<Card> threeOfAkind = new LinkedList<>();
+		
+		for (int index=0 ; index<cards.length ; index++) {
+			if(index!=4) {
+				if (cards[index].getNumber() == cards[index+1].getNumber()) {
+					threeOfAkind.push(cards[index]);
+					if (index == 3) {
+						threeOfAkind.push(cards[index+1]);
+						System.out.println("do");
+					}
+				}
+			}
+		}
+		
+		return threeOfAkind.size() == 3;
 		
 	}
 	
@@ -69,9 +138,6 @@ public final class TypeRule {
 		int unsameCount = 0;
 		boolean isFourOfAKind = false;
 		for (int index=0 ; index<cards.length ; index++) {
-			
-			System.out.println(index);
-			
 			if (index == 0) {	//先將第一張丟入暫存
 				tmp = cards[index];
 			} else {
