@@ -100,14 +100,36 @@ public class TypeRule {
 		return null;
 	}
 	
-	public Card[] numberSort(Card... cards) {
+	
+	/**
+	 * 按照大小排序，小的在前，大的在後
+	 * 透過氣泡排序法
+	 * 
+	 * @param cards	被操作的牌組
+	 * @return	返回一個排序完的陣列
+	 */
+	public static Card[] numberSort(Card... cards) {
 		Card[] tmp = new Card[cards.length];	//重新把牌排列的暫存
-		
+		Card card_tmp = null;
+		for (int i=0 ; i<cards.length ; i++) {
+//			System.out.println("i=" + i + "\t");
+			for (int j=0 ; j<cards.length-i-1 ; j++) {
+				System.out.println("j=" + j + "\tj+i=" + (j+1));
+//				if (cards[i].getNumber().getCode() < cards[j+1].getNumber().getCode()) {
+//					System.out.println("i=" + i + "\ti+j=" + (j+1));
+////					card_tmp = cards[i+1];
+////					cards[i] = card_tmp;
+////					cards[i+1] = cards[i];
+//				}
+			}
+			System.out.println();
+		}
 		return tmp;
 	}
 	
 	public static void main(String[] args) {
-		
+		for (Card card : TypeRule.numberSort(Card.CLUB_EIGHT, Card.DIAMOND_EIGHT, Card.DIAMOND_FOUR, Card.HEART_FIVE))
+			System.out.println(card);
 	}
 	
 
