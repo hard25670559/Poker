@@ -4,20 +4,15 @@ import java.util.Arrays;
 
 import Poker.Card;
 
-public class TypeRule {
-	private Card[] cards = new Card[5];
-	
-	public TypeRule(Card... cards) {
-		this.cards = cards;
-	}
+public final class TypeRule {
 	
 	/**
 	 * 判斷是否為同花順
 	 * 
 	 * @return 回傳是或否
 	 */
-	public boolean isStraightFlush() {
-		return this.isStraight() && this.isFlush();
+	public static boolean isStraightFlush() {
+		return TypeRule.isStraight() && TypeRule.isFlush();
 	}
 	
 	/**
@@ -25,10 +20,10 @@ public class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	public boolean isFlush() {
+	public static boolean isFlush(Card... cards) {
 		Card tmp = null;	//基準暫存
 		
-		for (Card card : this.cards) {
+		for (Card card : cards) {
 			if (tmp != null) {
 				if (card.getSuit() != tmp.getSuit())
 					return false;	//不相同就直接回傳false
@@ -45,12 +40,14 @@ public class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	public boolean isStraight() {
-		Card[] tmp = new Card[this.cards.length];
-		int[] num_tmp = new int[this.cards.length];
+	public static boolean isStraight(Card... cards) {
+		Card[] tmp = new Card[cards.length];
+		int[] num_tmp = new int[cards.length];
 		
-		for (int index=0 ; index<this.cards.length ; index++) {
-			num_tmp[index] = this.cards[index].getNumber().getCode();
+//		if (tmp)
+		
+		for (int index=0 ; index<cards.length ; index++) {
+			num_tmp[index] = cards[index].getNumber().getCode();
 		}
 		
 		Arrays.sort(num_tmp);
@@ -64,19 +61,19 @@ public class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	public boolean isFourOfAKind() {
+	public static boolean isFourOfAKind(Card... cards) {
 		Card tmp = null;
 		int sameCount = 0;
 		int unsameCount = 0;
 		boolean isFourOfAKind = false;
-		for (int index=0 ; index<this.cards.length ; index++) {
+		for (int index=0 ; index<cards.length ; index++) {
 			
 			System.out.println(index);
 			
 			if (index == 0) {	//先將第一張丟入暫存
-				tmp = this.cards[index];
+				tmp = cards[index];
 			} else {
-				if (tmp.getNumber() == this.cards[index].getNumber()) {	//判斷相鄰的牌是否相同
+				if (tmp.getNumber() == cards[index].getNumber()) {	//判斷相鄰的牌是否相同
 					sameCount++;
 					if (sameCount == 3){	//有三次相同就不須再繼續跑下去
 						isFourOfAKind = true;
@@ -89,7 +86,7 @@ public class TypeRule {
 						break;
 					}
 				}
-				tmp = this.cards[index];	//更換暫存的牌，才有辦法判斷相鄰的牌
+				tmp = cards[index];	//更換暫存的牌，才有辦法判斷相鄰的牌
 			}
 		}
 		return isFourOfAKind;
