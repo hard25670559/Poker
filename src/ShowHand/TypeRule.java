@@ -41,13 +41,21 @@ public final class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public static boolean isStraight(Card... cards) {
-		Card[] sort = Poker.numberSort(cards);
+		cards = Poker.numberSort(cards);
 		
-		if (sort[0].getNumber() == Number.ONE && sort[1].getNumber() == Number.TEN) {
-			return (sort[2].getNumber() == Number.ELEVEN) && (sort[3].getNumber() == Number.TWELVE) && (sort[4].getNumber() == Number.THIRTEEN);
+		if (cards[0].getNumber() == Number.ONE && cards[1].getNumber() == Number.TEN) {	//判斷是否為A 10 11 12 13
+			return (cards[2].getNumber() == Number.ELEVEN) && (cards[3].getNumber() == Number.TWELVE) && (cards[4].getNumber() == Number.THIRTEEN);
+		} else {
+			int oneDifference  = 0;	//相鄰是否相差1的組數
+			for (int i=0 ; i<cards.length ; i++) {
+				if (i!=4) {
+					if (cards[i+1].getNumber().getCode() - cards[i].getNumber().getCode() == 1)
+						oneDifference++;
+				}
+			}
+			return oneDifference == 4;	//如果相鄰差一為四組，及代表為順子
 		}
 		
-		return false;
 	}
 	
 	/**

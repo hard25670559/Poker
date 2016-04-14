@@ -4,6 +4,6 @@ import ShowHand.TypeRule;
 
 public class test {
 	public static void main(String[] args) {
-		System.out.println(TypeRule.isStraightFlush(Card.CLUB_TEN, Card.CLUB_TWELVE, Card.CLUB_ELEVEN, Card.CLUB_TWELVE, Card.CLUB_THIRTEEN));
+		System.out.println(TypeRule.isStraightFlush(Card.CLUB_TWO, Card.CLUB_ONE, Card.CLUB_THREE, Card.CLUB_FOUR, Card.CLUB_FIVE));
 	}
 }
