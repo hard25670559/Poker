@@ -22,6 +22,7 @@ public class Poker {
 		for (int index=0 ; index<this.poker.length-1 ; index++) {
 			tmp[index] = this.poker[index]; 
 		}
+		
 		this.poker = tmp;
 		return card;
 	}
