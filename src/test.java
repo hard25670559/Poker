@@ -1,10 +1,9 @@
 import Poker.Card;
 import Poker.Poker;
+import ShowHand.TypeRule;
 
 public class test {
 	public static void main(String[] args) {
-		for(Card card :Poker.numberSort(Card.CLUB_ONE, Card.CLUB_NINE, Card.CLUB_TEN, Card.CLUB_ELEVEN, Card.CLUB_TWELVE, Card.CLUB_THIRTEEN)) {
-			System.out.println(card);
-		}
+		System.out.println(TypeRule.isStraightFlush(Card.CLUB_TEN, Card.CLUB_TWELVE, Card.CLUB_ELEVEN, Card.CLUB_TWELVE, Card.CLUB_THIRTEEN));
 	}
 }

@@ -1,7 +1,5 @@
 package Poker;
 
-import java.util.LinkedList;
-
 /**
  * 產生一副撲克牌
  * 
@@ -85,7 +83,6 @@ public class Poker {
 	 * @return 返回一個分類完成的牌組
 	 */
 	public Card[] suitSort(Card... cards) {
-		LinkedList<Card> tmp = new LinkedList<>();
 		Card[] anser = new Card[cards.length];
 		for (Suit suit : Suit.values()) {
 			for (int index=0 ; index<cards.length ; index++) {

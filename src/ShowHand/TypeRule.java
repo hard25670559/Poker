@@ -1,8 +1,8 @@
 package ShowHand;
 
-import java.util.Arrays;
-
 import Poker.Card;
+import Poker.Number;
+import Poker.Poker;
 
 public final class TypeRule {
 	
@@ -11,8 +11,8 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	public static boolean isStraightFlush() {
-		return TypeRule.isStraight() && TypeRule.isFlush();
+	public static boolean isStraightFlush(Card... cards) {
+		return TypeRule.isStraight(cards) && TypeRule.isFlush(cards);
 	}
 	
 	/**
@@ -41,17 +41,11 @@ public final class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public static boolean isStraight(Card... cards) {
-		Card[] tmp = new Card[cards.length];
-		int[] num_tmp = new int[cards.length];
+		Card[] sort = Poker.numberSort(cards);
 		
-//		if (tmp)
-		
-		for (int index=0 ; index<cards.length ; index++) {
-			num_tmp[index] = cards[index].getNumber().getCode();
+		if (sort[0].getNumber() == Number.ONE && sort[1].getNumber() == Number.TEN) {
+			return (sort[2].getNumber() == Number.ELEVEN) && (sort[3].getNumber() == Number.TWELVE) && (sort[4].getNumber() == Number.THIRTEEN);
 		}
-		
-		Arrays.sort(num_tmp);
-			
 		
 		return false;
 	}
