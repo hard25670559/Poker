@@ -1,8 +1,5 @@
 package ShowHand;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
 import Poker.Card;
 import Poker.Number;
 import Poker.Poker;
@@ -96,11 +93,22 @@ public final class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public static boolean isThreeOfAkind(Card... cards) {
-		cards = Poker.numberSort(cards);	//將牌組照點數牌續
+		cards = Poker.numberSort(cards);	//將牌組照點數排序
+		int same = 0;
 		
+		for (Card card : cards) {
+			for (int index=0 ; index<cards.length ; index++) {
+				if (card.getNumber() == cards[index].getNumber()) {
+					same++;
+				}
+			}
+			if (same != 3)
+				same = 0;
+			else
+				break;
+		}
 		
-		return true;
-		
+		return isFullHouse(cards) ? false : same == 3;	//如果判斷為葫蘆，就不是三條
 	}
 	
 	/**
@@ -157,6 +165,7 @@ public final class TypeRule {
 	
 	/**
 	 * 判斷是否為高牌
+	 * 
 	 * @param cards	要操作的牌組
 	 * @return	返回是否為高牌
 	 */
