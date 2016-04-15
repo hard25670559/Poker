@@ -1,5 +1,6 @@
 package ShowHand;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import Poker.Card;
@@ -66,19 +67,29 @@ public final class TypeRule {
 	 */
 	public static boolean isTwoPairs(Card... cards) {
 		cards = Poker.numberSort(cards);	//先將牌組照點數排序
+		LinkedList<Card> twoPairs = new LinkedList<>();
+		int sameCount = 0;
+		int pairs = 0;
 		
-		int sameCount  = 0;	//相鄰是否相差零的組數
-		
-		for (int i=0 ; i<cards.length ; i++) {
-			if (i!=4) {
-				if (cards[i+1].getNumber().getCode() - cards[i].getNumber().getCode() == 0) {
+		for (Card card : cards) {
+			for (Card tmp : cards) {
+				if (card.getNumber() == tmp.getNumber()) {
+					System.out.println(tmp);
+					if (pairs == 0)	//判斷有幾組對子
+						pairs++;
+					
+					twoPairs.push(tmp);
 					sameCount++;
-				} else {
-					sameCount--;
+					if (sameCount > 2)	//超過兩張一樣就有可能是三條或者葫蘆、鐵扇
+						return false;
 				}
 			}
 		}
-		return sameCount == 0;	//如果相鄰差零為兩組，及代表為兩對
+		
+		System.out.println(pairs);
+		
+		return pairs == 2;
+		
 		
 	}
 	
@@ -108,22 +119,19 @@ public final class TypeRule {
 	 * @return 回傳是或否
 	 */
 	public static boolean isThreeOfAkind(Card... cards) {
-		cards = Poker.numberSort(cards);
-		LinkedList<Card> threeOfAkind = new LinkedList<>();
+		cards = Poker.numberSort(cards);	//將牌組照點數牌續
+		LinkedList<Card> threeOfAkind = new LinkedList<>();	//用來確定是否有三張相同的暫存
 		
 		for (Card c : cards) {
 			for (Card tmp : cards) {
-				System.out.print( c.getNumber() + " == " + tmp.getNumber() + " = " + (c.getNumber() == tmp.getNumber()) + "\t");
-				
 				if (c.getNumber() == tmp.getNumber()) {
 					threeOfAkind.push(tmp);
 				}
 			}
-			if (threeOfAkind.size() != 3)
+			if (threeOfAkind.size() != 3)	//要是沒有三張就把暫存清空
 				threeOfAkind.clear();
-			else
+			else	//要是有三張就直接跳出迴圈
 				break;
-			System.out.println();
 		}
 		
 		return threeOfAkind.size() == 3;
@@ -161,5 +169,25 @@ public final class TypeRule {
 			}
 		}
 		return isFourOfAKind;
+	}
+	
+	/**
+	 * 判斷是否為葫蘆
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回是或否
+	 */
+	public static boolean isFullHouse(Card...cards) {
+		return true;
+	}
+	
+	/**
+	 * 判斷是否為高牌
+	 * @param cards	要操作的牌組
+	 * @return	返回是否為高牌
+	 */
+	public static boolean isHighCard(Card... cards) {
+		//如果不是其他任何牌組即為高牌
+		return !(isStraightFlush(cards) || isFlush(cards) || isStraight(cards) || isTwoPairs(cards) || isOnePairs(cards) || isThreeOfAkind(cards) || isFourOfAKind(cards) || isFullHouse(cards));
 	}
 }
