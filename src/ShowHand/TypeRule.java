@@ -171,6 +171,6 @@ public final class TypeRule {
 	 */
 	public static boolean isHighCard(Card... cards) {
 		//如果不是其他任何牌組即為高牌
-		return !(isStraightFlush(cards) || isFlush(cards) || isStraight(cards) || isTwoPairs(cards) || isOnePairs(cards) || isThreeOfAkind(cards) || isFourOfAKind(cards) || isFullHouse(cards));
+		return !(TypeRule.isStraightFlush(cards) || TypeRule.isFlush(cards) || TypeRule.isStraight(cards) || TypeRule.isTwoPairs(cards) || TypeRule.isOnePairs(cards) || TypeRule.isThreeOfAkind(cards) || TypeRule.isFourOfAKind(cards) || TypeRule.isFullHouse(cards));
 	}
 }
