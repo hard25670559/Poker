@@ -120,21 +120,9 @@ public final class TypeRule {
 	 */
 	public static boolean isThreeOfAkind(Card... cards) {
 		cards = Poker.numberSort(cards);	//將牌組照點數牌續
-		LinkedList<Card> threeOfAkind = new LinkedList<>();	//用來確定是否有三張相同的暫存
 		
-		for (Card c : cards) {
-			for (Card tmp : cards) {
-				if (c.getNumber() == tmp.getNumber()) {
-					threeOfAkind.push(tmp);
-				}
-			}
-			if (threeOfAkind.size() != 3)	//要是沒有三張就把暫存清空
-				threeOfAkind.clear();
-			else	//要是有三張就直接跳出迴圈
-				break;
-		}
 		
-		return threeOfAkind.size() == 3;
+		return true;
 		
 	}
 	
@@ -178,6 +166,15 @@ public final class TypeRule {
 	 * @return	返回是或否
 	 */
 	public static boolean isFullHouse(Card...cards) {
+		cards = Poker.numberSort(cards);
+		//排序過後，如果是為葫蘆牌型，牌組的組合即為前三張為三條後兩張為對子或者前兩張為對子後兩張為條子，所以只需檢查是否有前後兩張以外的點數
+		Card[] check = {cards[0], cards[4]};
+		
+		for (Card card : cards) {
+			if (!(check[0].getNumber() == card.getNumber() || check[1].getNumber() == card.getNumber()))
+				return false;
+		}
+		
 		return true;
 	}
 	
