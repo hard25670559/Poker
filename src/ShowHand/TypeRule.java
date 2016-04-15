@@ -111,16 +111,19 @@ public final class TypeRule {
 		cards = Poker.numberSort(cards);
 		LinkedList<Card> threeOfAkind = new LinkedList<>();
 		
-		for (int index=0 ; index<cards.length ; index++) {
-			if(index!=4) {
-				if (cards[index].getNumber() == cards[index+1].getNumber()) {
-					threeOfAkind.push(cards[index]);
-					if (index == 3) {
-						threeOfAkind.push(cards[index+1]);
-						System.out.println("do");
-					}
+		for (Card c : cards) {
+			for (Card tmp : cards) {
+				System.out.print( c.getNumber() + " == " + tmp.getNumber() + " = " + (c.getNumber() == tmp.getNumber()) + "\t");
+				
+				if (c.getNumber() == tmp.getNumber()) {
+					threeOfAkind.push(tmp);
 				}
 			}
+			if (threeOfAkind.size() != 3)
+				threeOfAkind.clear();
+			else
+				break;
+			System.out.println();
 		}
 		
 		return threeOfAkind.size() == 3;
