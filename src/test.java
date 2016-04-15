@@ -4,6 +4,6 @@ import ShowHand.TypeRule;
 
 public class test {
 	public static void main(String[] args) {
-		System.out.println(TypeRule.isFullHouse(Card.CLUB_ONE, Card.CLUB_EIGHT, Card.HEART_FOUR, Card.SPADE_ONE, Card.CLUB_FOUR));
+		System.out.println(TypeRule.isHighCard(Card.DIAMOND_TWO, Card.CLUB_TWO, Card.CLUB_THREE, Card.CLUB_FIVE, Card.CLUB_FOUR));
 	}
 }

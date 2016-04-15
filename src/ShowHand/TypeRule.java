@@ -67,30 +67,7 @@ public final class TypeRule {
 	 */
 	public static boolean isTwoPairs(Card... cards) {
 		cards = Poker.numberSort(cards);	//先將牌組照點數排序
-		LinkedList<Card> twoPairs = new LinkedList<>();
-		int sameCount = 0;
-		int pairs = 0;
-		
-		for (Card card : cards) {
-			for (Card tmp : cards) {
-				if (card.getNumber() == tmp.getNumber()) {
-					System.out.println(tmp);
-					if (pairs == 0)	//判斷有幾組對子
-						pairs++;
-					
-					twoPairs.push(tmp);
-					sameCount++;
-					if (sameCount > 2)	//超過兩張一樣就有可能是三條或者葫蘆、鐵扇
-						return false;
-				}
-			}
-		}
-		
-		System.out.println(pairs);
-		
-		return pairs == 2;
-		
-		
+		return false;
 	}
 	
 	/**
