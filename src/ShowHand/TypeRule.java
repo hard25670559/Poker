@@ -174,6 +174,12 @@ public final class TypeRule {
 		return !(TypeRule.isStraightFlush(cards) || TypeRule.isFlush(cards) || TypeRule.isStraight(cards) || TypeRule.isTwoPairs(cards) || TypeRule.isOnePair(cards) || TypeRule.isThreeOfAkind(cards) || TypeRule.isFourOfAKind(cards) || TypeRule.isFullHouse(cards));
 	}
 	
+	/**
+	 * 輸入牌組後輸出牌型
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	輸出牌型
+	 */
 	public static Type getType(Card... cards) {
 		Type anser = null;
 		
@@ -181,8 +187,20 @@ public final class TypeRule {
 			anser =  Type.HIGH_CARD;
 		if (TypeRule.isOnePair(cards))
 			return Type.ONE_PAIR;
+		if (TypeRule.isStraightFlush(cards))
+			return Type.STRAIGHT_FLUSH;
 		if (TypeRule.isStraight(cards))
-			return null;
+			return Type.STRAIGHT;
+		if (TypeRule.isFlush(cards))
+			return Type.FLUSH;
+		if (TypeRule.isFullHouse(cards))
+			return Type.FULL_HOUSE;
+		if (TypeRule.isThreeOfAkind(cards))
+			return Type.THREE_OF_A_KIND;
+		if (TypeRule.isTwoPairs(cards))
+			return Type.TWO_PAIRS;
+		if (TypeRule.isOnePair(cards))
+			return Type.ONE_PAIR;
 		
 		return anser;
 	}

@@ -10,98 +10,101 @@ public final class GameRule extends TypeCompare{
 	 * 兩組牌作比較，前者為比較者，後者為被比較者
 	 * 如果比較者的牌型大於被比較者就回傳true，否則回傳false
 	 * 
-	 * @param type1	比較者
-	 * @param type2	被比較者
+	 * @param cards1	比較者
+	 * @param cards2	被比較者
 	 * 
 	 * @return 回傳牌型是否大於被比較者
 	 */
-	public static boolean isBigger(CardType type1, CardType type2) {
-		return new GameRule().bigger(type1, type2);
+	public static boolean isBigger(Card[] cards1, Card[] cards2) {
+		return new GameRule().bigger(cards1, cards2);
 	}
 	
 	
 	@Override
-	protected boolean bigger(CardType type1, CardType type2) {
+	protected boolean bigger(Card[] cards1, Card[] cards2) {
+		//將牌組轉換成牌型
+		Type type3 = TypeRule.getType(cards1);
+		Type type4 = TypeRule.getType(cards2);
 		
-		if (type1.getCode() != type2.getCode())
-			return type1.getCode() < type2.getCode();
+		if (type3.getCode() != type4.getCode())	//如果牌型不一樣就能直接比較大小
+			return type3.getCode() < type4.getCode();
 		else {
 			boolean bigger = false;
 			
-			switch ((Type)type1) {
+			switch (type3) {
 				case STRAIGHT_FLUSH:
-					bigger = this.compareStraightFlush((Type)type1, (Type)type2);
+					bigger = this.compareStraightFlush(cards1, cards2);
 					break;
 				case FOUR_OF_A_KIND:
-					bigger = this.compareFourOfAKind((Type)type1, (Type)type2);
+					bigger = this.compareFourOfAKind(cards1, cards2);
 					break;
 				case FULL_HOUSE:
-					bigger = this.compareFullHouse((Type)type1, (Type)type2);
+					bigger = this.compareFullHouse(cards1, cards2);
 					break;
 				case FLUSH:
-					bigger = this.compareFluse((Type)type1, (Type)type2);
+					bigger = this.compareFluse(cards1, cards2);
 					break;
 				case STRAIGHT:
-					bigger = this.compareStraight((Type)type1, (Type)type2);
+					bigger = this.compareStraight(cards1, cards2);
 					break;
 				case THREE_OF_A_KIND:
-					bigger = this.compareThreeOfAKind((Type)type1, (Type)type2);
+					bigger = this.compareThreeOfAKind(cards1, cards2);
 					break;
 				case TWO_PAIRS:
-					bigger = this.compareTwoPairs((Type)type1, (Type)type2);
+					bigger = this.compareTwoPairs(cards1, cards2);
 					break;
 				case ONE_PAIR:
-					bigger = this.compareOnePair((Type)type1, (Type)type2);
+					bigger = this.compareOnePair(cards1, cards2);
 					break;
 				case HIGH_CARD:
-					bigger = this.compareHighCard((Type)type1, (Type)type2);
+					bigger = this.compareHighCard(cards1, cards2);
 					break;
 			}
 			return bigger;
 		}
 	}
 	
-	private boolean compareHighCard(Type type1, Type type2) {
+	private boolean compareHighCard(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareOnePair(Type type1, Type type2) {
+	private boolean compareOnePair(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareTwoPairs(Type type1, Type type2) {
+	private boolean compareTwoPairs(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareThreeOfAKind(Type type1, Type type2) {
+	private boolean compareThreeOfAKind(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareStraight(Type type1, Type type2) {
+	private boolean compareStraight(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareFluse(Type type1, Type type2) {
+	private boolean compareFluse(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareFullHouse(Type type1, Type type2) {
+	private boolean compareFullHouse(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareFourOfAKind(Type type1, Type type2) {
+	private boolean compareFourOfAKind(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
 
-	private boolean compareStraightFlush(Type type1, Type type2) {
+	private boolean compareStraightFlush(Card[] type1, Card[] type2) {
 		
 		return false;
 	}
@@ -109,7 +112,7 @@ public final class GameRule extends TypeCompare{
 	public static void main(String[] args) {
 		
 		
-		System.out.println(GameRule.isBigger(Type.STRAIGHT_FLUSH, Type.FOUR_OF_A_KIND));
+//		System.out.println(GameRule.isBigger(Type.STRAIGHT_FLUSH, Type.FOUR_OF_A_KIND));
 	}
 	
 }

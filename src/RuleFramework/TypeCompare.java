@@ -1,4 +1,7 @@
 package RuleFramework;
+
+import Poker.Card;
+
 /**
  * 兩組牌的比較介面
  * 
@@ -6,5 +9,7 @@ package RuleFramework;
  *
  */
 public abstract class TypeCompare {
-	protected abstract boolean bigger(CardType type1, CardType type2);
+	protected abstract boolean bigger(Card[] cards1, Card[] cards2);
+	
+
 }
