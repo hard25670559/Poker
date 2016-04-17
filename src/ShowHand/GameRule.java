@@ -75,14 +75,6 @@ public final class GameRule extends TypeCompare{
 			}
 		}
 		
-		/**
-		 * 相同牌型比大小規則：
-		 * 比完所有點數後比較花色
-		 * 數字的大小順序為：
-		 * 2>1>13>12>11>10>9>8>7>6>5>4>3
-		 * 
-		 */
-		
 		return false;
 	}
 
