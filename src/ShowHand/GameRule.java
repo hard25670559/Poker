@@ -1,6 +1,7 @@
 package ShowHand;
 
 import Poker.Card;
+import Poker.Number;
 import RuleFramework.CardType;
 import RuleFramework.TypeCompare;
 
@@ -64,47 +65,63 @@ public final class GameRule extends TypeCompare{
 		}
 	}
 	
-	private boolean compareHighCard(Card[] type1, Card[] type2) {
+	private boolean compareHighCard(Card[] cards1, Card[] cards2) {
+		for (int index=0 ; index<cards1.length ; index++) {
+			if (!(cards1[index].getNumber() == cards2[index].getNumber())) {	//如果兩張牌點數一樣大，就可能必須再比花色大小
+//				if (card.getNumber() == Number.ONE || card.getNumber() == Number.TWO)
+//					return true;
+//				else
+//					return card.getNumber().getCode() > tmp.getNumber().getCode();
+			}
+		}
+		
+		/**
+		 * 相同牌型比大小規則：
+		 * 比完所有點數後比較花色
+		 * 數字的大小順序為：
+		 * 2>1>13>12>11>10>9>8>7>6>5>4>3
+		 * 
+		 */
 		
 		return false;
 	}
 
-	private boolean compareOnePair(Card[] type1, Card[] type2) {
+	private boolean compareOnePair(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareTwoPairs(Card[] type1, Card[] type2) {
+	private boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareThreeOfAKind(Card[] type1, Card[] type2) {
+	private boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareStraight(Card[] type1, Card[] type2) {
+	private boolean compareStraight(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFluse(Card[] type1, Card[] type2) {
+	private boolean compareFluse(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFullHouse(Card[] type1, Card[] type2) {
+	private boolean compareFullHouse(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFourOfAKind(Card[] type1, Card[] type2) {
+	private boolean compareFourOfAKind(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareStraightFlush(Card[] type1, Card[] type2) {
+	private boolean compareStraightFlush(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
