@@ -412,6 +412,59 @@ public final class TypeRule {
 		return cards;
 	}
 	
+	/**
+	 * 一對的排序，對子放最前面，後面雜牌照規則排序
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] onePairSort(Card... cards) {
+		Card[] pair = new Card[2];
+		Card[] tmp = new Card[3];
+		
+		if (cards[3].getNumber() == cards[4].getNumber()) {
+			tmp = TypeRule.ruleNumberSort(cards[0], cards[1], cards[2]);
+			pair[0] = cards[3];
+			pair[1] = cards[4];
+		}
+		
+		if (cards[2].getNumber() == cards[3].getNumber()) {
+			tmp = TypeRule.ruleNumberSort(cards[0], cards[1], cards[4]);
+			pair[0] = cards[2];
+			pair[1] = cards[3];
+		}
+		if (cards[1].getNumber() == cards[2].getNumber()) {
+			tmp = TypeRule.ruleNumberSort(cards[0], cards[3], cards[4]);
+			pair[0] = cards[1];
+			pair[1] = cards[2];
+	
+		}
+		if (cards[0].getNumber() == cards[1].getNumber()) {
+			tmp = TypeRule.ruleNumberSort(cards[2], cards[3], cards[4]);
+			pair[0] = cards[0];
+			pair[1] = cards[1];
+		}
+		
+		for (int index=0 ; index<cards.length ; index++) {
+			if (index<2)
+				cards[index] = pair[index];
+			else
+				cards[index] = tmp[index-2];
+		}
+		
+		return cards;
+	}
+	
+	/**
+	 * 高牌的排序，按照規則排序來排序
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] highCardSort(Card... cards) {
+		TypeRule.ruleNumberSort(cards);		//高牌的排序只需要透過點數的規則牌續即可
+		return cards;
+	}
 	
 	/**
 	 * 依照牌型的排序
@@ -445,9 +498,10 @@ public final class TypeRule {
 				TypeRule.twoPairsSort(cards);
 				break;
 			case ONE_PAIR:
+				TypeRule.onePairSort(cards);
 				break;
 			case HIGH_CARD:
-				TypeRule.ruleNumberSort(cards);		//高牌的排序只需要透過點數的規則牌續即可
+				TypeRule.highCardSort(cards);
 				break;
 		}
 		
