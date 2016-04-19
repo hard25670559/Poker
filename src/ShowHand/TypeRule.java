@@ -309,6 +309,18 @@ public final class TypeRule {
 	}
 	
 	/**
+	 * 同花的順序，2>1>13>12>11>10>9>8>7>6>5>4>3，越大的排越前面
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] flushSort(Card... cards) {
+		TypeRule.ruleNumberSort(cards);
+		
+		return cards;
+	}
+	
+	/**
 	 * 依照牌型的排序
 	 * 
 	 * @param cards	要操作的牌組
@@ -325,7 +337,7 @@ public final class TypeRule {
 				TypeRule.fourOfAKindSort(cards);
 				break;
 			case FULL_HOUSE:
-				TypeRule.fourOfAKindSort(cards);
+				TypeRule.fullHouseSotr(cards);
 				break;
 			case FLUSH:
 				break;
