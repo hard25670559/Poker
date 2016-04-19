@@ -11,7 +11,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isStraightFlush(Card... cards) {
+	public static boolean isStraightFlush(Card... cards) {
 		return TypeRule.isStraight(cards) && TypeRule.isFlush(cards);
 	}
 	
@@ -20,7 +20,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isFlush(Card... cards) {
+	public static boolean isFlush(Card... cards) {
 		Card tmp = null;	//基準暫存
 		
 		for (Card card : cards) {
@@ -40,7 +40,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isStraight(Card... cards) {
+	public static boolean isStraight(Card... cards) {
 		cards = Poker.numberSort(cards);	//先將牌組照點數排序
 		
 		if (cards[0].getNumber() == Number.ONE && cards[1].getNumber() == Number.TEN) {	//判斷是否為A 10 11 12 13
@@ -63,8 +63,21 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isTwoPairs(Card... cards) {
+	public static boolean isTwoPairs(Card... cards) {
 		cards = Poker.numberSort(cards);	//先將牌組照點數排序
+		
+		if (cards[0].getNumber() == cards[1].getNumber() && cards[2].getNumber() == cards[3].getNumber()) {
+			return true;
+		}
+		
+		if (cards[0].getNumber() == cards[1].getNumber() && cards[3].getNumber() == cards[4].getNumber()) {
+			return true;
+		}
+		
+		if (cards[1].getNumber() == cards[2].getNumber() && cards[3].getNumber() == cards[4].getNumber()) {
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -73,7 +86,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isOnePair(Card... cards) {
+	public static boolean isOnePair(Card... cards) {
 		cards = Poker.numberSort(cards);	//先將牌組照點數排序
 		
 		int sameCount  = 0;	//相鄰是否相差零的組數
@@ -92,7 +105,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isThreeOfAkind(Card... cards) {
+	public static boolean isThreeOfAkind(Card... cards) {
 		cards = Poker.numberSort(cards);	//將牌組照點數排序
 		int same = 0;
 		
@@ -116,7 +129,7 @@ public final class TypeRule {
 	 * 
 	 * @return 回傳是或否
 	 */
-	private static boolean isFourOfAKind(Card... cards) {
+	public static boolean isFourOfAKind(Card... cards) {
 		Card tmp = null;
 		int sameCount = 0;
 		int unsameCount = 0;
@@ -150,7 +163,7 @@ public final class TypeRule {
 	 * @param cards	要操作的牌組
 	 * @return	返回是或否
 	 */
-	private static boolean isFullHouse(Card...cards) {
+	public static boolean isFullHouse(Card...cards) {
 		cards = Poker.numberSort(cards);
 		//排序過後，如果是為葫蘆牌型，牌組的組合即為前三張為三條後兩張為對子或者前兩張為對子後兩張為條子，所以只需檢查是否有前後兩張以外的點數
 		Card[] check = {cards[0], cards[4]};
@@ -169,7 +182,7 @@ public final class TypeRule {
 	 * @param cards	要操作的牌組
 	 * @return	返回是否為高牌
 	 */
-	private static boolean isHighCard(Card... cards) {
+	public static boolean isHighCard(Card... cards) {
 		//如果不是其他任何牌組即為高牌
 		return !(TypeRule.isStraightFlush(cards) || TypeRule.isFlush(cards) || TypeRule.isStraight(cards) || TypeRule.isTwoPairs(cards) || TypeRule.isOnePair(cards) || TypeRule.isThreeOfAkind(cards) || TypeRule.isFourOfAKind(cards) || TypeRule.isFullHouse(cards));
 	}
@@ -218,28 +231,30 @@ public final class TypeRule {
 	 * @return	輸出牌型
 	 */
 	public static Type getType(Card... cards) {
-		Type anser = null;
+		
+		Type type = null;
 		
 		if (TypeRule.isHighCard(cards))
-			anser =  Type.HIGH_CARD;
+			type = Type.HIGH_CARD;
 		if (TypeRule.isOnePair(cards))
-			return Type.ONE_PAIR;
+			type = Type.ONE_PAIR;
 		if (TypeRule.isStraightFlush(cards))
-			return Type.STRAIGHT_FLUSH;
+			type = Type.STRAIGHT_FLUSH;
 		if (TypeRule.isStraight(cards))
-			return Type.STRAIGHT;
+			type = Type.STRAIGHT;
 		if (TypeRule.isFlush(cards))
-			return Type.FLUSH;
+			type = Type.FLUSH;
 		if (TypeRule.isFullHouse(cards))
-			return Type.FULL_HOUSE;
+			type = Type.FULL_HOUSE;
 		if (TypeRule.isThreeOfAkind(cards))
-			return Type.THREE_OF_A_KIND;
+			type = Type.THREE_OF_A_KIND;
 		if (TypeRule.isTwoPairs(cards))
-			return Type.TWO_PAIRS;
+			type = Type.TWO_PAIRS;
 		if (TypeRule.isOnePair(cards))
-			return Type.ONE_PAIR;
+			type = Type.ONE_PAIR;
 		
-		return anser;
+		return type;
+		
 	}
 	
 	/**
@@ -315,7 +330,7 @@ public final class TypeRule {
 	 * @return	返回一個排序完的排組
 	 */
 	public static Card[] flushSort(Card... cards) {
-		TypeRule.ruleNumberSort(cards);
+		cards = TypeRule.ruleNumberSort(cards);
 		
 		return cards;
 	}
@@ -462,7 +477,12 @@ public final class TypeRule {
 	 * @return	返回一個排序完的排組
 	 */
 	public static Card[] highCardSort(Card... cards) {
-		TypeRule.ruleNumberSort(cards);		//高牌的排序只需要透過點數的規則牌續即可
+		cards = TypeRule.ruleNumberSort(cards);		//高牌的排序只需要透過點數的規則牌續即可
+		
+		for (Card card : cards) {
+			System.out.println(card);
+		}
+		
 		return cards;
 	}
 	
@@ -486,10 +506,10 @@ public final class TypeRule {
 				TypeRule.fullHouseSotr(cards);
 				break;
 			case FLUSH:
-				TypeRule.flushSort(cards);
+				cards = TypeRule.ruleNumberSort(cards);		//使用flushSort會出現ruleNumberSort排序錯誤，不曉得原因
 				break;
 			case STRAIGHT:
-				TypeRule.straightFlushSort(cards);
+				TypeRule.straightSort(cards);
 				break;
 			case THREE_OF_A_KIND:
 				TypeRule.threeOfAKindSort(cards);
@@ -501,7 +521,7 @@ public final class TypeRule {
 				TypeRule.onePairSort(cards);
 				break;
 			case HIGH_CARD:
-				TypeRule.highCardSort(cards);
+				cards = TypeRule.ruleNumberSort(cards);		//使用highCardSort會出現ruleNumberSort排序錯誤，不曉得原因
 				break;
 		}
 		
