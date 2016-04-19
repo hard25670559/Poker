@@ -321,6 +321,64 @@ public final class TypeRule {
 	}
 	
 	/**
+	 * 順子的排序，點數越大的排越後面
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	回傳排序完的排組
+	 */
+	public static Card[] straightSort(Card... cards) {
+		cards = Poker.numberSort(cards);
+		
+		return cards;
+	}
+	
+	/**
+	 * 三條的排序，條子放前面，後兩張則照大小擺放，大的擺前面，小的百後面
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] threeOfAKindSort(Card... cards) {
+		cards = Poker.numberSort(cards);	//先將牌排序
+		
+		Number num = null;					//判斷條子的點數暫存
+		Card[] tmp = null;					//不同牌的暫存
+		Card[] threeOfAKind = new Card[3];	//條子的暫存
+		
+		if ((num = cards[0].getNumber()) == cards[1].getNumber() && num == cards[2].getNumber()) {	//後兩張為不同點數，前三張為條子
+			tmp = TypeRule.ruleNumberSort(cards[3], cards[4]);	//做大小排序
+			//依序放入暫存
+			threeOfAKind[0] = cards[0];
+			threeOfAKind[1] = cards[1];
+			threeOfAKind[2] = cards[2];
+		}
+		
+		if ((num = cards[1].getNumber()) == cards[2].getNumber() && num == cards[3].getNumber()) {	//第一張和最後一張點數不同，中間三張為條子
+			tmp = TypeRule.ruleNumberSort(cards[0], cards[4]);
+			threeOfAKind[0] = cards[1];
+			threeOfAKind[1] = cards[2];
+			threeOfAKind[2] = cards[3];
+		}
+		
+		if ((num = cards[2].getNumber()) == cards[3].getNumber() && num == cards[4].getNumber()) {	//前兩張為不同點數，後三張為條子
+			tmp = TypeRule.ruleNumberSort(cards[0], cards[1]);
+			threeOfAKind[0] = cards[2];
+			threeOfAKind[1] = cards[3];
+			threeOfAKind[2] = cards[4];
+		}
+		
+		for (int index=0 ; index<threeOfAKind.length ; index++) {
+			cards[index] = threeOfAKind[index];
+		}
+		
+		cards[3] = tmp[0];
+		cards[4] = tmp[1];
+		
+		return cards;
+		
+	}
+	
+	/**
 	 * 依照牌型的排序
 	 * 
 	 * @param cards	要操作的牌組
@@ -340,10 +398,13 @@ public final class TypeRule {
 				TypeRule.fullHouseSotr(cards);
 				break;
 			case FLUSH:
+				TypeRule.flushSort(cards);
 				break;
-			case STRAIGHT:	//因順子只需透過點數牌續即可，所以沒有必要再排序一次
+			case STRAIGHT:
+				TypeRule.straightFlushSort(cards);
 				break;
 			case THREE_OF_A_KIND:
+				TypeRule.threeOfAKindSort(cards);
 				break;
 			case TWO_PAIRS:
 				break;
@@ -356,5 +417,6 @@ public final class TypeRule {
 		
 		return cards;
 	}
+
 	
 }
