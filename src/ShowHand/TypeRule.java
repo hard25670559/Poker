@@ -379,12 +379,47 @@ public final class TypeRule {
 	}
 	
 	/**
+	 * 兩對的排序，比較大的對子放前面，小的放後面，最後一張牌為雜牌
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] twoPairsSort(Card... cards) {
+		cards = Poker.numberSort(cards);
+		
+		Card tmp = null;
+		Card[] sort = null;
+		if (cards[0].getNumber() == cards[1].getNumber() && cards[2].getNumber() == cards[3].getNumber()) {
+			sort = TypeRule.ruleNumberSort(cards[0], cards[1], cards[2], cards[3]);
+			tmp = cards[4];
+		}
+		
+		if (cards[0].getNumber() == cards[1].getNumber() && cards[3].getNumber() == cards[4].getNumber()) {
+			sort = TypeRule.ruleNumberSort(cards[0], cards[3]);
+			tmp = cards[2];
+		}
+		
+		if (cards[1].getNumber() == cards[2].getNumber() && cards[3].getNumber() == cards[4].getNumber()) {
+			sort = TypeRule.ruleNumberSort(cards[1], cards[3]);
+			tmp = cards[0];
+		}
+		
+		for (int index=0 ; index<sort.length ; index++) {
+			cards[index] = sort[index];
+		}
+		
+		cards[4] = tmp;
+		return cards;
+	}
+	
+	
+	/**
 	 * 依照牌型的排序
 	 * 
 	 * @param cards	要操作的牌組
 	 * @return	返回一個牌敘後的牌組
 	 */
-	public static Card[] typeSote(Card... cards) {
+	public static Card[] typeSort(Card... cards) {
 		Type type = TypeRule.getType(cards);	//先確定牌組是何種牌型
 		
 		switch (type) {
@@ -407,6 +442,7 @@ public final class TypeRule {
 				TypeRule.threeOfAKindSort(cards);
 				break;
 			case TWO_PAIRS:
+				TypeRule.twoPairsSort(cards);
 				break;
 			case ONE_PAIR:
 				break;
