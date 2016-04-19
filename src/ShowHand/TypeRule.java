@@ -57,6 +57,7 @@ public final class TypeRule {
 		}
 		
 	}
+	
 	/**
 	 * 判斷是否為兩對
 	 * 
@@ -82,10 +83,9 @@ public final class TypeRule {
 					sameCount++;
 			}
 		}
-		return sameCount == 1;	//如果相鄰差零為兩組，及代表為兩對
+		return sameCount == 1;	//如果相鄰差零為兩組，及代表為一對
 		
 	}
-	
 	
 	/**
 	 * 判斷是否為三條
@@ -98,17 +98,17 @@ public final class TypeRule {
 		
 		for (Card card : cards) {
 			for (int index=0 ; index<cards.length ; index++) {
-				if (card.getNumber() == cards[index].getNumber()) {
-					same++;
+				if (card.getNumber() == cards[index].getNumber()) {	//看看有沒有一樣的排
+					same++;		//發現一樣的排就加一
 				}
 			}
-			if (same != 3)
+			if (same != 3)		//如果沒有相同的排就將相同的排的數量歸零
 				same = 0;
 			else
-				break;
+				break;			//如果相同的排超過三張就直接跳出
 		}
 		
-		return isFullHouse(cards) ? false : same == 3;	//如果判斷為葫蘆，就不是三條
+		return (isFourOfAKind(cards) || isFullHouse(cards)) ? false : same == 3;	//如果判斷為葫蘆或者鐵支，就不是三條
 	}
 	
 	/**
@@ -175,6 +175,43 @@ public final class TypeRule {
 	}
 	
 	/**
+	 * 按照規則的點數大小牌續，大在前，小在後
+	 * 
+	 * @param cards	被操作的牌組
+	 * @return
+	 */
+	public static Card[] ruleNumberSort(Card... cards) {
+		cards = Poker.numberSort(cards);
+		
+		Card[] card_tmp = new Card[cards.length];
+		int index = 0;
+		
+		for (int i=0 ; i<cards.length ; i++) {
+			if (cards[i].getNumber() == Number.TWO) {
+				
+				card_tmp[index] = cards[i];
+				index++;
+			}
+		}
+		
+		for (int i=0 ; i<cards.length ; i++) {
+			if (cards[i].getNumber() == Number.ONE) {
+				card_tmp[index] = cards[i];
+				index++;
+			}
+		}
+		
+		int last = cards.length - index;
+		
+		for (int i=0 ; i<last ; i++) {
+			card_tmp[index] = cards[cards.length - (i+1)];
+			index++;
+		}
+		
+		return card_tmp;
+	}
+	
+	/**
 	 * 輸入牌組後輸出牌型
 	 * 
 	 * @param cards	要操作的牌組
@@ -204,4 +241,88 @@ public final class TypeRule {
 		
 		return anser;
 	}
+	
+	/**
+	 * 鐵扇的排序，將四張相同的牌排在最前面，剩下的排最後
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的排組
+	 */
+	public static Card[] fourOfAKindSort(Card... cards) {
+		cards = Poker.numberSort(cards);		//將牌先照點數排序
+		
+		Card tmp = null;	//放第一章牌的暫存
+		if (cards[0].getNumber() != cards[1].getNumber()) {
+			for (int index=0 ; index<cards.length ; index++) {
+				if (index==0) {
+					tmp = cards[0];			//將第一章放入暫存
+					cards[0] = cards[1];	//將第二張牌放入第一張牌的位址
+				} else {
+					if (index == 4) {
+						cards[4] = tmp;		//將第一章牌放到最後一張牌的位址
+					} else {
+						cards[index] = cards[index + 1];	//將下一張牌放到前一張牌的位址
+					}
+				}
+			}
+		}
+		
+		return cards;
+	}
+	
+	/**
+	 * 同花順的排序
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的牌組
+	 */
+	public static Card[] straightFlushSort(Card... cards) {
+		cards = Poker.numberSort(cards);	//同花順因為花色相同，順序以從numberSort()排序完畢，所以沒有必要再排序一次
+		
+		return cards;
+	}
+	
+	public static Card[] fullHouseSotr(Card... cards) {
+		
+		
+		return cards;
+	}
+	
+	/**
+	 * 依照牌型的排序
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個牌敘後的牌組
+	 */
+	public static Card[] typeSote(Card... cards) {
+		Type type = TypeRule.getType(cards);	//先確定牌組是何種牌型
+		
+		switch (type) {
+			case STRAIGHT_FLUSH:
+				TypeRule.straightFlushSort(cards);
+				break;
+			case FOUR_OF_A_KIND:
+				TypeRule.fourOfAKindSort(cards);
+				break;
+			case FULL_HOUSE:
+				TypeRule.fourOfAKindSort(cards);
+				break;
+			case FLUSH:
+				break;
+			case STRAIGHT:	//因順子只需透過點數牌續即可，所以沒有必要再排序一次
+				break;
+			case THREE_OF_A_KIND:
+				break;
+			case TWO_PAIRS:
+				break;
+			case ONE_PAIR:
+				break;
+			case HIGH_CARD:
+				TypeRule.ruleNumberSort(cards);		//高牌的排序只需要透過點數的規則牌續即可
+				break;
+		}
+		
+		return cards;
+	}
+	
 }

@@ -76,42 +76,7 @@ public class Poker {
 		return cards;
 	}
 	
-	/**
-	 * 按照規則的點數大小牌續，大在前，小在後
-	 * 
-	 * @param cards	被操作的牌組
-	 * @return
-	 */
-	public static Card[] ruleNumberSort(Card... cards) {
-		cards = Poker.numberSort(cards);
-		
-		Card[] card_tmp = new Card[cards.length];
-		int index = 0;
-		
-		for (int i=0 ; i<cards.length ; i++) {
-			if (cards[i].getNumber() == Number.TWO) {
-				
-				card_tmp[index] = cards[i];
-				index++;
-			}
-		}
-		
-		for (int i=0 ; i<cards.length ; i++) {
-			if (cards[i].getNumber() == Number.ONE) {
-				card_tmp[index] = cards[i];
-				index++;
-			}
-		}
-		
-		int last = cards.length - index;
-		
-		for (int i=0 ; i<last ; i++) {
-			card_tmp[index] = cards[cards.length - (i+1)];
-			index++;
-		}
-		
-		return card_tmp;
-	}
+	
 	
 	/**
 	 * 將一組牌照花色分類
@@ -130,9 +95,5 @@ public class Poker {
 		}
 		
 		return anser;
-	}
-	
-	public static Card[] typeSort() {
-		return null;
 	}
 }
