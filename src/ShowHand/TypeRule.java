@@ -271,7 +271,7 @@ public final class TypeRule {
 	}
 	
 	/**
-	 * 同花順的排序
+	 * 同花順的排序，由小牌到大
 	 * 
 	 * @param cards	要操作的牌組
 	 * @return	返回一個排序完的牌組
@@ -282,8 +282,28 @@ public final class TypeRule {
 		return cards;
 	}
 	
+	/**
+	 * 葫蘆順序，將條子放前面，將對子放後面
+	 * 
+	 * @param cards	要操作的牌組
+	 * @return	返回一個排序完的牌組
+	 */
 	public static Card[] fullHouseSotr(Card... cards) {
+		cards = Poker.numberSort(cards);
 		
+		//葫蘆的牌型經過排序後，不是前有三張後有兩張，要不就是前有兩張後有三張，所以只要知道第二章跟第三張是否是同樣的點數就能判斷是否要排序
+		if (cards[1].getNumber()!=cards[2].getNumber()) {
+			Card[] pair = {cards[0], cards[1]};		//前兩張一定是為對子，先放到對子暫存內
+			Card[] threeOfAKind = {cards[2], cards[3], cards[4]};	//後兩張一定是為條子，先放到暫存內
+			
+			for (int index=0 ; index<threeOfAKind.length ; index++) {		//將條子放到最前面
+				cards[index] = threeOfAKind[index];
+			}
+			
+			for (int index=0 ; index<pair.length ; index++) {		//將對子放到最後面
+				cards[index+3] = pair[index];
+			}
+		}
 		
 		return cards;
 	}
