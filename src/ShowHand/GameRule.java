@@ -2,6 +2,7 @@ package ShowHand;
 
 import Poker.Card;
 import Poker.Number;
+import Poker.Suit;
 import RuleFramework.CardType;
 import RuleFramework.TypeCompare;
 
@@ -31,6 +32,8 @@ public final class GameRule extends TypeCompare{
 			return type3.getCode() < type4.getCode();
 		else {
 			boolean bigger = false;
+			
+			//先將牌組排序過後，比較好做寫流程判斷
 			cards1 = TypeRule.typeSort(cards1);
 			cards2 = TypeRule.typeSort(cards2);
 			
@@ -94,7 +97,7 @@ public final class GameRule extends TypeCompare{
 				break;
 			}
 			if (cards1[index].getNumber().getCode() < cards2[index].getNumber().getCode()) {	//A<B case
-				isBigger = false;	////cards1比較小，所以isBigger = false
+				isBigger = false;	//cards1比較小，所以isBigger = false
 				break;
 			}
 			if (cards1[index].getNumber().getCode() == cards2[index].getNumber().getCode()) {	//A=B case
@@ -113,8 +116,28 @@ public final class GameRule extends TypeCompare{
 	}
 
 	public static boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
+		boolean isBigger = false;
 		
-		return false;
+		//如果所有點數都一樣大，就比第一組對子的花色誰大
+		if (cards1[0].getNumber().getCode() == cards2[0].getNumber().getCode() && cards1[2].getNumber().getCode() == cards2[2].getNumber().getCode() && cards1[4].getNumber().getCode() == cards2[4].getNumber().getCode()) {
+			if (cards1[0].getSuit() == Suit.CLUB || cards1[1].getSuit() == Suit.CLUB)
+				isBigger = true;
+			else
+				isBigger = false;
+		} else {
+			//如果第一或第二個對子的點數為1或者2就進入
+			if (cards1[0].getNumber() == Number.ONE || cards1[0].getNumber() == Number.TWO || cards1[2].getNumber() == Number.ONE || cards1[2].getNumber() == Number.TWO) {
+				if (cards1[0].getNumber() == Number.ONE)
+					;
+				else
+					;
+					
+			}
+		}
+		
+		
+		
+		return isBigger;
 	}
 
 	public static boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
