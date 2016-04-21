@@ -6,19 +6,22 @@ import ShowHand.TypeRule;
 
 public class test {
 	public static void main(String[] args) {
-		Card[] cards = {Card.DIAMOND_ONE, Card.CLUB_ELEVEN, Card.CLUB_THREE, Card.SPADE_ELEVEN, Card.SPADE_TWO};
-		
 		Card[] cards1 = {Card.CLUB_ELEVEN, Card.CLUB_ELEVEN, Card.CLUB_THREE, Card.SPADE_ELEVEN, Card.SPADE_TWO};
 		Card[] cards2 = {Card.DIAMOND_ONE, Card.CLUB_ELEVEN, Card.CLUB_THREE, Card.SPADE_ELEVEN, Card.SPADE_TWO};
-		System.out.println(GameRule.compareHighCard(cards1, cards2));
-//		Card[] cards = {Card.DIAMOND_TWO, Card.DIAMOND_ONE, Card.SPADE_SEVEN, Card.DIAMOND_TWELVE, Card.DIAMOND_THIRTEEN};
-		Type type = TypeRule.getType(cards);
-		Card[] sort = TypeRule.typeSort(cards);
+		System.out.println("Is Cards1 bigger then Cards2?\n" + GameRule.compareHighCard(cards1, cards2));
 		
-		System.out.println("Type:" + type);
-		for (Card card : sort) {
+		System.out.println();
+		
+		System.out.println("Cards1:");
+		for (Card card : cards1) {
 			System.out.println(card);
 		}
 		
+		System.out.println();
+		
+		System.out.println("Cards2:");
+		for (Card card : cards1) {
+			System.out.println(card);
+		}
 	}
 }
