@@ -31,89 +31,118 @@ public final class GameRule extends TypeCompare{
 			return type3.getCode() < type4.getCode();
 		else {
 			boolean bigger = false;
+			cards1 = TypeRule.typeSort(cards1);
+			cards2 = TypeRule.typeSort(cards2);
 			
 			switch (type3) {
 				case STRAIGHT_FLUSH:
-					bigger = this.compareStraightFlush(cards1, cards2);
+					bigger = GameRule.compareStraightFlush(cards1, cards2);
 					break;
 				case FOUR_OF_A_KIND:
-					bigger = this.compareFourOfAKind(cards1, cards2);
+					bigger = GameRule.compareFourOfAKind(cards1, cards2);
 					break;
 				case FULL_HOUSE:
-					bigger = this.compareFullHouse(cards1, cards2);
+					bigger = GameRule.compareFullHouse(cards1, cards2);
 					break;
 				case FLUSH:
-					bigger = this.compareFluse(cards1, cards2);
+					bigger = GameRule.compareFluse(cards1, cards2);
 					break;
 				case STRAIGHT:
-					bigger = this.compareStraight(cards1, cards2);
+					bigger = GameRule.compareStraight(cards1, cards2);
 					break;
 				case THREE_OF_A_KIND:
-					bigger = this.compareThreeOfAKind(cards1, cards2);
+					bigger = GameRule.compareThreeOfAKind(cards1, cards2);
 					break;
 				case TWO_PAIRS:
-					bigger = this.compareTwoPairs(cards1, cards2);
+					bigger = GameRule.compareTwoPairs(cards1, cards2);
 					break;
 				case ONE_PAIR:
-					bigger = this.compareOnePair(cards1, cards2);
+					bigger = GameRule.compareOnePair(cards1, cards2);
 					break;
 				case HIGH_CARD:
-					bigger = this.compareHighCard(cards1, cards2);
+					bigger = GameRule.compareHighCard(cards1, cards2);
 					break;
 			}
 			return bigger;
 		}
 	}
 	
-	private boolean compareHighCard(Card[] cards1, Card[] cards2) {
+	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
+		boolean isBigger = false;
+		
 		for (int index=0 ; index<cards1.length ; index++) {
-			if (!(cards1[index].getNumber() == cards2[index].getNumber())) {	//如果兩張牌點數一樣大，就可能必須再比花色大小
-//				if (card.getNumber() == Number.ONE || card.getNumber() == Number.TWO)
-//					return true;
-//				else
-//					return card.getNumber().getCode() > tmp.getNumber().getCode();
+			if (cards1[index].getNumber() == Number.TWO || cards1[index].getNumber() == Number.ONE) {
+				if (cards1[index].getNumber() == Number.TWO) {			//要是cards2[index]是2的話
+					if (cards2[index].getNumber() != Number.TWO) {		//要是cards2[index]不是2的話，就沒有牌會比cards1[index]大
+						isBigger =  true;		//cards1比較大
+						break;
+					}
+				}
+				if (cards1[index].getNumber() == Number.ONE) {
+					if (cards2[index].getNumber() == Number.TWO) {		//唯獨1比二大
+						isBigger =  false;		//cards1比較小
+						break;
+					} else {
+						isBigger =  true;		//比2小的就是cards1比較大
+						break;
+					}
+				}
 			}
+			//以下為普通的牌的三種狀況，分別是A>B A<B A=B，如果A=B就還需要再比對第一張的花色，因為一副牌內部可能會有相同花色
+			if (cards1[index].getNumber().getCode() > cards2[index].getNumber().getCode()) {	//A>B case
+				isBigger = true;
+				break;
+			}
+			if (cards1[index].getNumber().getCode() < cards2[index].getNumber().getCode()) {	//A<B case
+				isBigger = false;	////cards1比較小，所以isBigger = false
+				break;
+			}
+			if (cards1[index].getNumber().getCode() == cards2[index].getNumber().getCode()) {	//A=B case
+				if (index==4)
+					isBigger = cards1[0].getSuit().getCode() > cards2[0].getSuit().getCode();
+			}
+			
 		}
 		
-		return false;
+		return isBigger;
 	}
 
-	private boolean compareOnePair(Card[] cards1, Card[] cards2) {
+	public static boolean compareOnePair(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
+	public static boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
+	public static boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareStraight(Card[] cards1, Card[] cards2) {
+	public static boolean compareStraight(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFluse(Card[] cards1, Card[] cards2) {
+	public static boolean compareFluse(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFullHouse(Card[] cards1, Card[] cards2) {
+	public static boolean compareFullHouse(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareFourOfAKind(Card[] cards1, Card[] cards2) {
+	public static boolean compareFourOfAKind(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
 
-	private boolean compareStraightFlush(Card[] cards1, Card[] cards2) {
+	public static boolean compareStraightFlush(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
