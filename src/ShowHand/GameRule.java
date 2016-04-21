@@ -126,12 +126,13 @@ public final class GameRule extends TypeCompare{
 				isBigger = false;
 		} else {
 			//如果第一或第二個對子的點數為1或者2就進入
-			if (cards1[0].getNumber() == Number.ONE || cards1[0].getNumber() == Number.TWO || cards1[2].getNumber() == Number.ONE || cards1[2].getNumber() == Number.TWO) {
-				if (cards1[0].getNumber() == Number.ONE)
-					;
-				else
-					;
+			if (cards1[0].getNumber() == Number.ONE || cards1[0].getNumber() == Number.TWO) {
+				//如果
+				if (cards1[0].getNumber() == Number.ONE || cards1[2].getNumber() == Number.TWO) {
 					
+				} else {
+					
+				}
 			}
 		}
 		

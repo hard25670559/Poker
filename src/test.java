@@ -20,7 +20,7 @@ public class test {
 		System.out.println();
 		
 		System.out.println("Cards2:");
-		for (Card card : cards1) {
+		for (Card card : cards2) {
 			System.out.println(card);
 		}
 	}
