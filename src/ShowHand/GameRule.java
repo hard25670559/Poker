@@ -70,6 +70,48 @@ public final class GameRule extends TypeCompare{
 		}
 	}
 	
+	/**
+	 * 兩張牌之間大小比較
+	 * card1點數要是比card2大，救回傳WIN
+	 * card1點數要是比card2小，救回傳LOSE
+	 * card1點數要是跟card2一樣，救回傳DRAW
+	 * 
+	 * @param card1	第一章牌
+	 * @param card2	第二章牌
+	 * @return	返回輸贏狀態
+	 */
+	public static Status numberCompare(Card card1, Card card2) {
+		Status status = Status.WIN;
+		
+		if (card1.getNumber() == Number.TWO || card1.getNumber() == Number.ONE) {
+			if (card1.getNumber() == Number.TWO) {
+				if (card2.getNumber() != Number.TWO) {
+					status = Status.WIN;
+				} else {
+					status = Status.DRAW;
+				}
+			} else {
+				if (card2.getNumber() == Number.TWO) {
+					status = Status.LOSE;
+				} else if (card2.getNumber() == Number.ONE) {
+					status = Status.DRAW;
+				} else {
+					status = Status.WIN;
+				}
+			}
+		} else {
+			if (card1.getNumber() == card2.getNumber()) {
+				status = Status.DRAW;
+			} else if (card1.getNumber().getCode() > card2.getNumber().getCode()) {
+				status = Status.WIN;
+			} else {
+				status = Status.LOSE;
+			}
+		}
+		
+		return status;
+	}
+	
 	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
