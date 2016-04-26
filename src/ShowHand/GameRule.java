@@ -114,39 +114,7 @@ public final class GameRule extends TypeCompare{
 	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
-		for (int index=0 ; index<cards1.length ; index++) {
-			if (cards1[index].getNumber() == Number.TWO || cards1[index].getNumber() == Number.ONE) {
-				if (cards1[index].getNumber() == Number.TWO) {			//要是cards2[index]是2的話
-					if (cards2[index].getNumber() != Number.TWO) {		//要是cards2[index]不是2的話，就沒有牌會比cards1[index]大
-						isBigger =  true;		//cards1比較大
-						break;
-					}
-				}
-				if (cards1[index].getNumber() == Number.ONE) {
-					if (cards2[index].getNumber() == Number.TWO) {		//唯獨1比二大
-						isBigger =  false;		//cards1比較小
-						break;
-					} else {
-						isBigger =  true;		//比2小的就是cards1比較大
-						break;
-					}
-				}
-			}
-			//以下為普通的牌的三種狀況，分別是A>B A<B A=B，如果A=B就還需要再比對第一張的花色，因為一副牌內部可能會有相同花色
-			if (cards1[index].getNumber().getCode() > cards2[index].getNumber().getCode()) {	//A>B case
-				isBigger = true;
-				break;
-			}
-			if (cards1[index].getNumber().getCode() < cards2[index].getNumber().getCode()) {	//A<B case
-				isBigger = false;	//cards1比較小，所以isBigger = false
-				break;
-			}
-			if (cards1[index].getNumber().getCode() == cards2[index].getNumber().getCode()) {	//A=B case
-				if (index==4)
-					isBigger = cards1[0].getSuit().getCode() > cards2[0].getSuit().getCode();
-			}
-			
-		}
+		
 		
 		return isBigger;
 	}
@@ -156,28 +124,49 @@ public final class GameRule extends TypeCompare{
 		return false;
 	}
 
+	/**
+	 * 判斷兩組TwoPairs哪一個比較大？
+	 * cards1比cards2大就回傳true，反之則船false
+	 * 
+	 * @param cards1	牌組一
+	 * @param cards2	牌組二
+	 * 
+	 * @return	回傳cards1是否比cards2大
+	 */
 	public static boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
-		//如果所有點數都一樣大，就比第一組對子的花色誰大
-		if (cards1[0].getNumber().getCode() == cards2[0].getNumber().getCode() && cards1[2].getNumber().getCode() == cards2[2].getNumber().getCode() && cards1[4].getNumber().getCode() == cards2[4].getNumber().getCode()) {
-			if (cards1[0].getSuit() == Suit.CLUB || cards1[1].getSuit() == Suit.CLUB)
+		switch (GameRule.numberCompare(cards1[0], cards2[0])) {
+			case WIN:
 				isBigger = true;
-			else
+				break;
+			case LOSE:
 				isBigger = false;
-		} else {
-			//如果第一或第二個對子的點數為1或者2就進入
-			if (cards1[0].getNumber() == Number.ONE || cards1[0].getNumber() == Number.TWO) {
-				//如果
-				if (cards1[0].getNumber() == Number.ONE || cards1[2].getNumber() == Number.TWO) {
-					
-				} else {
-					
+				break;
+			case DRAW:
+				switch (GameRule.numberCompare(cards1[2], cards2[2])) {
+					case WIN:
+						isBigger = true;
+						break;
+					case LOSE:
+						isBigger = false;
+						break;
+					case DRAW:
+						switch (GameRule.numberCompare(cards1[4], cards2[4])) {
+							case WIN:
+								isBigger = true;
+								break;
+							case LOSE:
+								isBigger = false;
+								break;
+							case DRAW:
+								isBigger = (cards1[0].getSuit() == Suit.SPADE || cards1[1].getSuit() == Suit.SPADE) ? true : false;
+								break;
+						}
+						break;
 				}
-			}
+				break;
 		}
-		
-		
 		
 		return isBigger;
 	}

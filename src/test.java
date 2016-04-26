@@ -9,8 +9,8 @@ public class test {
 		
 		System.out.println(GameRule.numberCompare(Card.CLUB_TWO, Card.CLUB_TWO));
 		
-		Card[] cards1 = {Card.DIAMOND_ELEVEN, Card.CLUB_SEVEN, Card.CLUB_THREE, Card.HEART_ELEVEN, Card.SPADE_SEVEN};
-		Card[] cards2 = {Card.CLUB_EIGHT, Card.HEART_TWO, Card.SPADE_EIGHT, Card.DIAMOND_TWO, Card.CLUB_NINE};
+		Card[] cards1 = {Card.DIAMOND_ELEVEN, Card.CLUB_ELEVEN, Card.CLUB_TWO, Card.SPADE_THREE, Card.HEART_TWO};
+		Card[] cards2 = {Card.CLUB_TWO, Card.HEART_TWO, Card.SPADE_EIGHT, Card.DIAMOND_TWO, Card.CLUB_NINE};
 		System.out.println("Is Cards1 bigger then Cards2?\n" + GameRule.compareHighCard(cards1, cards2));
 		
 		System.out.println();
