@@ -191,11 +191,17 @@ public final class GameRule extends TypeCompare{
 		return isBigger;
 	}
 
+	/**
+	 * 判斷兩組三條哪個比較大
+	 * 
+	 * @param cards1	第一組牌
+	 * @param cards2	第二組牌
+	 * @return	如果cards1比cards2大就回傳true，反之則回傳false
+	 */
 	public static boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
+		boolean isBigger = GameRule.numberCompare(cards1[0], cards2[0]) == Status.WIN ? true : false;
 		
-		
-		
-		return false;
+		return isBigger;
 	}
 
 	public static boolean compareStraight(Card[] cards1, Card[] cards2) {
