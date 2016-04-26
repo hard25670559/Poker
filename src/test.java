@@ -11,7 +11,7 @@ public class test {
 		
 		Card[] cards1 = {Card.DIAMOND_ELEVEN, Card.CLUB_ELEVEN, Card.CLUB_TWO, Card.SPADE_THREE, Card.HEART_TWO};
 		Card[] cards2 = {Card.CLUB_TWO, Card.HEART_TWO, Card.SPADE_EIGHT, Card.DIAMOND_TWO, Card.CLUB_NINE};
-		System.out.println("Is Cards1 bigger then Cards2?\n" + GameRule.compareHighCard(cards1, cards2));
+		System.out.println("Is Cards1 bigger then Cards2?\n" + GameRule.fluseCompare(cards1, cards2));
 		
 		System.out.println();
 		

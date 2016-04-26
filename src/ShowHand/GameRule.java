@@ -16,11 +16,6 @@ public final class GameRule extends TypeCompare{
 	 * 
 	 * @return 回傳牌型是否大於被比較者
 	 */
-	public static boolean isBigger(Card[] cards1, Card[] cards2) {
-		return new GameRule().bigger(cards1, cards2);
-	}
-	
-	
 	@Override
 	protected boolean bigger(Card[] cards1, Card[] cards2) {
 		//將牌組轉換成牌型
@@ -38,35 +33,48 @@ public final class GameRule extends TypeCompare{
 			
 			switch (type3) {
 				case STRAIGHT_FLUSH:
-					bigger = GameRule.compareStraightFlush(cards1, cards2);
+					bigger = GameRule.straightFlushCompare(cards1, cards2);
 					break;
 				case FOUR_OF_A_KIND:
-					bigger = GameRule.compareFourOfAKind(cards1, cards2);
+					bigger = GameRule.fourOfAKindCompare(cards1, cards2);
 					break;
 				case FULL_HOUSE:
-					bigger = GameRule.compareFullHouse(cards1, cards2);
+					bigger = GameRule.fullHouseCompare(cards1, cards2);
 					break;
 				case FLUSH:
-					bigger = GameRule.compareFluse(cards1, cards2);
+					bigger = GameRule.fluseCompare(cards1, cards2);
 					break;
 				case STRAIGHT:
-					bigger = GameRule.compareStraight(cards1, cards2);
+					bigger = GameRule.straightCompare(cards1, cards2);
 					break;
 				case THREE_OF_A_KIND:
-					bigger = GameRule.compareThreeOfAKind(cards1, cards2);
+					bigger = GameRule.threeOfAKindCompare(cards1, cards2);
 					break;
 				case TWO_PAIRS:
-					bigger = GameRule.compareTwoPairs(cards1, cards2);
+					bigger = GameRule.twoPairsCompare(cards1, cards2);
 					break;
 				case ONE_PAIR:
-					bigger = GameRule.compareOnePair(cards1, cards2);
+					bigger = GameRule.onePairCompare(cards1, cards2);
 					break;
 				case HIGH_CARD:
-					bigger = GameRule.compareHighCard(cards1, cards2);
+					bigger = GameRule.highCardCompare(cards1, cards2);
 					break;
 			}
 			return bigger;
 		}
+	}
+	
+	/**
+	 * 兩組牌作比較，前者為比較者，後者為被比較者
+	 * 如果比較者的牌型大於被比較者就回傳true，否則回傳false
+	 * 
+	 * @param cards1	比較者
+	 * @param cards2	被比較者
+	 * 
+	 * @return 回傳牌型是否大於被比較者
+	 */
+	public static boolean isBigger(Card[] cards1, Card[] cards2) {
+		return new GameRule().bigger(cards1, cards2);
 	}
 	
 	/**
@@ -118,7 +126,7 @@ public final class GameRule extends TypeCompare{
 	 * @param cards2	第二組牌
 	 * @return	cards1比較大就回傳true，反之則回傳false
 	 */
-	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
+	public static boolean highCardCompare(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		boolean change = false;		//判斷狀態是否改變
 		
@@ -142,9 +150,62 @@ public final class GameRule extends TypeCompare{
 		return isBigger;
 	}
 
-	public static boolean compareOnePair(Card[] cards1, Card[] cards2) {
+	/**
+	 * 判斷兩組OnePair哪一個比較大？
+	 * cards1比cards2大就回傳true，反之則船false
+	 * 
+	 * @param cards1	牌組一
+	 * @param cards2	牌組二
+	 * 
+	 * @return	回傳cards1是否比cards2大
+	 */
+	public static boolean onePairCompare(Card[] cards1, Card[] cards2) {
+		boolean isBigger = false;
 		
-		return false;
+		switch (GameRule.numberCompare(cards1[0], cards2[0])) {
+			case WIN:				//贏的狀況
+				isBigger = true;
+				break;
+			case LOSE:				//輸的狀況
+				isBigger = false;
+				break;
+			case DRAW:
+				switch (GameRule.numberCompare(cards1[2], cards2[2])) {
+					case WIN:				//贏的狀況
+						isBigger = true;
+						break;
+					case LOSE:				//輸的狀況
+						isBigger = false;
+						break;
+					case DRAW:
+						switch (GameRule.numberCompare(cards1[3], cards2[3])) {
+							case WIN:				//贏的狀況
+								isBigger = true;
+								break;
+							case LOSE:				//輸的狀況
+								isBigger = false;
+								break;
+							case DRAW:
+								switch (GameRule.numberCompare(cards1[4], cards2[4])) {
+									case WIN:				//贏的狀況
+										isBigger = true;
+										break;
+									case LOSE:				//輸的狀況
+										isBigger = false;
+										break;
+									case DRAW:
+										//如果最後一張牌的點數還是一樣大，就比第一組對子的花色，有黑桃者比較大
+										isBigger = (cards1[0].getSuit() == Suit.SPADE || cards1[1].getSuit() == Suit.SPADE) ? true : false;
+										break;
+								}
+								break;
+						}
+						break;
+				}
+				break;
+		}
+		
+		return isBigger;
 	}
 
 	/**
@@ -156,7 +217,7 @@ public final class GameRule extends TypeCompare{
 	 * 
 	 * @return	回傳cards1是否比cards2大
 	 */
-	public static boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
+	public static boolean twoPairsCompare(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
 		switch (GameRule.numberCompare(cards1[0], cards2[0])) {	//判斷第一個對子
@@ -202,41 +263,59 @@ public final class GameRule extends TypeCompare{
 	 * @param cards2	第二組牌
 	 * @return	如果cards1比cards2大就回傳true，反之則回傳false
 	 */
-	public static boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
+	public static boolean threeOfAKindCompare(Card[] cards1, Card[] cards2) {
 		boolean isBigger = GameRule.numberCompare(cards1[0], cards2[0]) == Status.WIN ? true : false;
 		
 		return isBigger;
 	}
 
-	public static boolean compareStraight(Card[] cards1, Card[] cards2) {
+	/**
+	 * 判斷兩組同花哪個比較大
+	 * 
+	 * @param cards1	第一組牌
+	 * @param cards2	第二組牌
+	 * @return	cards1比較大就回傳true，反之則回傳false
+	 */
+	public static boolean fluseCompare(Card[] cards1, Card[] cards2) {
+		boolean isBigger = cards1[0].getSuit().getCode() < cards2[0].getSuit().getCode();
+		
+		return isBigger;
+	}
+
+	/**
+	 * 判斷兩組葫蘆哪個比較大
+	 * 
+	 * @param cards1	第一組牌
+	 * @param cards2	第二組牌
+	 * @return	如果cards1比cards2大就回傳true，反之則回傳false
+	 */
+	public static boolean fullHouseCompare(Card[] cards1, Card[] cards2) {
+		boolean isBigger = GameRule.numberCompare(cards1[0], cards2[0]) == Status.WIN ? true : false;
+		
+		return isBigger;
+	}
+	
+	/**
+	 * 判斷兩組鐵扇哪個比較大
+	 * 
+	 * @param cards1	第一組牌
+	 * @param cards2	第二組牌
+	 * @return	如果cards1比cards2大就回傳true，反之則回傳false
+	 */
+	public static boolean fourOfAKindCompare(Card[] cards1, Card[] cards2) {
+		boolean isBigger = GameRule.numberCompare(cards1[0], cards2[0]) == Status.WIN ? true : false;
+		
+		return isBigger;
+	}
+
+	public static boolean straightFlushCompare(Card[] cards1, Card[] cards2) {
 		
 		return false;
 	}
-
-	public static boolean compareFluse(Card[] cards1, Card[] cards2) {
+	
+	public static boolean straightCompare(Card[] cards1, Card[] cards2) {
 		
 		return false;
-	}
-
-	public static boolean compareFullHouse(Card[] cards1, Card[] cards2) {
-		
-		return false;
-	}
-
-	public static boolean compareFourOfAKind(Card[] cards1, Card[] cards2) {
-		
-		return false;
-	}
-
-	public static boolean compareStraightFlush(Card[] cards1, Card[] cards2) {
-		
-		return false;
-	}
-
-	public static void main(String[] args) {
-		
-		
-//		System.out.println(GameRule.isBigger(Type.STRAIGHT_FLUSH, Type.FOUR_OF_A_KIND));
 	}
 	
 }
