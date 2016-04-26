@@ -309,13 +309,42 @@ public final class GameRule extends TypeCompare{
 	}
 
 	public static boolean straightFlushCompare(Card[] cards1, Card[] cards2) {
+		boolean isBigger = false;
 		
-		return false;
+		if (cards1[0].getSuit().getCode() == cards2[0].getSuit().getCode()) {
+			if (cards1[0].getNumber() == Number.ONE && cards1[1].getNumber() == Number.TWO) {
+				if (cards2[0].getNumber() == Number.ONE && cards2[1].getNumber() == Number.TWO) {
+					if (cards1[1].getSuit().getCode() < cards2[1].getSuit().getCode()) {
+						isBigger = true;
+					} else {
+						isBigger = false;
+					}
+				} else {
+					isBigger = true;
+				}
+			} else if (cards1[0].getNumber() == Number.ONE && cards1[4].getNumber() == Number.THIRTEEN) {
+				if (cards2[0].getNumber() == Number.ONE && cards2[1].getNumber() == Number.TWO) {
+					isBigger = false;
+				} else if (cards2[0].getNumber() == Number.ONE && cards2[1].getNumber() == Number.THIRTEEN) {
+					isBigger = cards1[0].getSuit().getCode() < cards2[0].getSuit().getCode();
+				}
+			} else if (cards1[0].getNumber() == Number.TWO) {
+				if (cards2[0].getNumber() == Number.TWO) {
+					
+				}
+			}
+		} else if (cards1[0].getSuit().getCode() < cards2[0].getSuit().getCode()) {
+			isBigger = true;
+		} else {
+			isBigger = false;
+		}
+		
+		return isBigger;
 	}
 	
 	public static boolean straightCompare(Card[] cards1, Card[] cards2) {
-		
-		return false;
+		boolean isBigger = false;
+		return isBigger;
 	}
 	
 }
