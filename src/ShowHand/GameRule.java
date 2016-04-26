@@ -111,10 +111,30 @@ public final class GameRule extends TypeCompare{
 		return status;
 	}
 	
+	/**
+	 * 判斷兩組高牌哪一組比較大
+	 * 
+	 * @param cards1	第一組牌
+	 * @param cards2	第二組牌
+	 * @return	cards1比較大就回傳true，反之則回傳false
+	 */
 	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
-		
+		for (int index=0 ; index<cards1.length ; index++) {
+			switch (GameRule.numberCompare(cards1[index], cards2[index])) {
+				case WIN:
+					isBigger = true;
+					break;
+				case LOSE:
+					isBigger = false;
+					break;
+				case DRAW:
+					if (index == 4)
+						isBigger = cards1[0].getSuit().getCode() < cards2[0].getSuit().getCode();
+					break;
+			}
+		}
 		
 		return isBigger;
 	}
@@ -172,6 +192,8 @@ public final class GameRule extends TypeCompare{
 	}
 
 	public static boolean compareThreeOfAKind(Card[] cards1, Card[] cards2) {
+		
+		
 		
 		return false;
 	}
