@@ -80,35 +80,35 @@ public final class GameRule extends TypeCompare{
 	 * @return	返回輸贏狀態
 	 */
 	public static Status numberCompare(Card card1, Card card2) {
-		Status status = Status.WIN;
+		Status status = Status.WIN;		//輸贏狀態
 		
-		if (card1.getNumber() == Number.TWO || card1.getNumber() == Number.ONE) {
-			if (card1.getNumber() == Number.TWO) {
-				if (card2.getNumber() != Number.TWO) {
-					status = Status.WIN;
+		if (card1.getNumber() == Number.TWO || card1.getNumber() == Number.ONE) {	//要是牌是2或1
+			if (card1.getNumber() == Number.TWO) {		//要是牌是2
+				if (card2.getNumber() != Number.TWO) {	//假如對方不是2
+					status = Status.WIN;	//就一定贏了
 				} else {
-					status = Status.DRAW;
+					status = Status.DRAW;	//如果是的話就是平手
 				}
-			} else {
-				if (card2.getNumber() == Number.TWO) {
-					status = Status.LOSE;
-				} else if (card2.getNumber() == Number.ONE) {
-					status = Status.DRAW;
-				} else {
-					status = Status.WIN;
+			} else {		//要是牌是1
+				if (card2.getNumber() == Number.TWO) {	//除了2以外都比1小
+					status = Status.LOSE;	//對方要是2就輸了
+				} else if (card2.getNumber() == Number.ONE) {	//除非他是1
+					status = Status.DRAW;		//依樣點數就是平手
+				} else {	//1和2以外的
+					status = Status.WIN;	//就贏了
 				}
 			}
-		} else {
-			if (card1.getNumber() == card2.getNumber()) {
-				status = Status.DRAW;
-			} else if (card1.getNumber().getCode() > card2.getNumber().getCode()) {
+		} else {	//除了1和2以外
+			if (card1.getNumber() == card2.getNumber()) {	//要是牌的點數相同
+				status = Status.DRAW;		//就平手
+			} else if (card1.getNumber().getCode() > card2.getNumber().getCode()) {	//點數大就贏了
 				status = Status.WIN;
 			} else {
-				status = Status.LOSE;
+				status = Status.LOSE;		//點數小就輸了
 			}
 		}
 		
-		return status;
+		return status;		//回傳輸贏狀態
 	}
 	
 	/**
@@ -120,17 +120,20 @@ public final class GameRule extends TypeCompare{
 	 */
 	public static boolean compareHighCard(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
+		boolean change = false;		//判斷狀態是否改變
 		
-		for (int index=0 ; index<cards1.length ; index++) {
+		for (int index=0 ; index<cards1.length && !change ; index++) {	//一張一張比，如果狀態改變就不需要再比下去
 			switch (GameRule.numberCompare(cards1[index], cards2[index])) {
 				case WIN:
 					isBigger = true;
+					change = true;
 					break;
 				case LOSE:
 					isBigger = false;
+					change = true;
 					break;
 				case DRAW:
-					if (index == 4)
+					if (index == 4)	//要是比了四次都是平手，就比手邊點數最大的花色
 						isBigger = cards1[0].getSuit().getCode() < cards2[0].getSuit().getCode();
 					break;
 			}
@@ -156,15 +159,15 @@ public final class GameRule extends TypeCompare{
 	public static boolean compareTwoPairs(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
-		switch (GameRule.numberCompare(cards1[0], cards2[0])) {
-			case WIN:
+		switch (GameRule.numberCompare(cards1[0], cards2[0])) {	//判斷第一個對子
+			case WIN:				//贏的狀況
 				isBigger = true;
 				break;
-			case LOSE:
+			case LOSE:				//輸的狀況
 				isBigger = false;
 				break;
-			case DRAW:
-				switch (GameRule.numberCompare(cards1[2], cards2[2])) {
+			case DRAW:				//平手的狀況
+				switch (GameRule.numberCompare(cards1[2], cards2[2])) {	//判斷第二個對子
 					case WIN:
 						isBigger = true;
 						break;
@@ -172,7 +175,7 @@ public final class GameRule extends TypeCompare{
 						isBigger = false;
 						break;
 					case DRAW:
-						switch (GameRule.numberCompare(cards1[4], cards2[4])) {
+						switch (GameRule.numberCompare(cards1[4], cards2[4])) {	//判斷最後一張牌
 							case WIN:
 								isBigger = true;
 								break;
@@ -180,6 +183,7 @@ public final class GameRule extends TypeCompare{
 								isBigger = false;
 								break;
 							case DRAW:
+								//如果最後一張牌的點數還是一樣大，就比第一組對子的花色，有黑桃者比較大
 								isBigger = (cards1[0].getSuit() == Suit.SPADE || cards1[1].getSuit() == Suit.SPADE) ? true : false;
 								break;
 						}
