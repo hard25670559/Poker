@@ -3,7 +3,6 @@ package ShowHand;
 import Poker.Card;
 import Poker.Number;
 import Poker.Suit;
-import RuleFramework.CardType;
 import RuleFramework.TypeCompare;
 
 public final class GameRule extends TypeCompare{
