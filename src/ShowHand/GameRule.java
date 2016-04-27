@@ -311,7 +311,7 @@ public final class GameRule extends TypeCompare{
 	public static boolean straightFlushCompare(Card[] cards1, Card[] cards2) {
 		boolean isBigger = false;
 		
-		if (cards1[0].getSuit().getCode() == cards2[0].getSuit().getCode()) {
+		if (cards1[0].getSuit().getCode() == cards2[0].getSuit().getCode()) {	//花色要是相同
 			if (cards1[0].getNumber() == Number.ONE && cards1[1].getNumber() == Number.TWO) {
 				if (cards2[0].getNumber() == Number.ONE && cards2[1].getNumber() == Number.TWO) {
 					if (cards1[1].getSuit().getCode() < cards2[1].getSuit().getCode()) {
