@@ -27,4 +27,10 @@ public enum Card {
 		return this.number;
 	}
 	
+	public static void main(String[] args) {
+		for (Card card : Card.values()) {
+			System.out.println(card);
+		}
+	}
+	
 }
